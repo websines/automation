@@ -19,7 +19,7 @@ app.use(cors({
 app.use('/api', botRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Service is Live')
+    res.send('Please wait upto 12-24 hours for the service to be ready');
 })
 
 
