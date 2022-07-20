@@ -4,28 +4,6 @@ const chromium = require('chromium')
 const puppeteer = require('puppeteer')
 const axios = require('axios')
 
-
-const getJSON = async(data, jwt) => {
-    return await axios.post(process.env.SQUEEZE_DASHBOARD_URL, JSON.stringify({
-        "firstName": data.firstName,
-        "lastName": data.lastName,
-        "email": data.email,
-        "password": data.password,
-        "street": data.street,
-        "city": data.city,
-        "state": data.state,
-        "zip": data.zip,
-    }), {
-        headers: {
-            'x-sqz-token': jwt
-        }
-    }).then(response => {
-        return response.data
-    }).catch(err => {
-        return err.response.data
-    })
-}
-
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -96,7 +74,6 @@ const BotService = async(data) => {
         if(code === 'No code found' || code === undefined){
             return 'No code found'
         }
-        console.log("Code: ", code)
         const codeElement = await page.$$('input[name="verifyNumber"]')
         await codeElement[0].type(code, {delay:35})
         const button_step3 = await page.$$('button[class="verification-stage__submit"]')
@@ -107,10 +84,13 @@ const BotService = async(data) => {
             { waitUntil: 'load'}
         )
     
-        const jwt = await page.cookies()
+        const cookies = await page.cookies()
         
-        const UserData = await getJSON(data, jwt[21].value)
-        return UserData
+        const jwt = cookies.find(cookie => cookie.name === '_jwt').value
+
+        await browser.close()
+
+        return jwt
 
     } catch (err) {
         return err

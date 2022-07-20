@@ -27,7 +27,6 @@ const getCode = async() => {
             "X-API-KEY": process.env.TRUVERIFI_API_KEY
         }
     }).then(response => {
-        console.log(response.data)
         const text = response.data.sms[0].text
         const code = text.match(/\d+/)[0]
         return code
