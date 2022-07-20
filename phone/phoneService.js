@@ -1,6 +1,6 @@
 const axios = require('axios')
-const WebSocket = require('ws')
-const ws = new WebSocket('wss://app.truverifi.com/api/ws')
+// const WebSocket = require('ws')
+// const ws = new WebSocket('wss://app.truverifi.com/api/ws')
 
 
 const getPhone = async() => {
@@ -31,27 +31,27 @@ const getCode = async() => {
         const code = text.match(/\d+/)[0]
         return code
     }).catch(error => {
-        return error.response.data
+        return error
     })
 }
 
-ws.on('open', () => {
-    console.log('WebSocket Client Connected');
-    setInterval(() => {
-        ws.send(JSON.stringify({
-            "jsonrpc": "2.0",
-            "method": "ping"
-        }))
-    }, 90000)
+// ws.on('open', () => {
+//     console.log('WebSocket Client Connected');
+//     setInterval(() => {
+//         ws.send(JSON.stringify({
+//             "jsonrpc": "2.0",
+//             "method": "ping"
+//         }))
+//     }, 90000)
 
-    ws.send(JSON.stringify({
-        "jsonrpc": '2.0',
-        "method": 'subscribe',
-        "params": {
-            "apiKey": "NucqaT4T9C1TKmszLnI2NLXC"
-        }
-    }))
-})
+//     ws.send(JSON.stringify({
+//         "jsonrpc": '2.0',
+//         "method": 'subscribe',
+//         "params": {
+//             "apiKey": "NucqaT4T9C1TKmszLnI2NLXC"
+//         }
+//     }))
+// })
 
    
 

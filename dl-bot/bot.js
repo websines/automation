@@ -26,7 +26,7 @@ const BotService = async(data) => {
     
     try {
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             executablePath: chromium.path
         })
         const page = await browser.newPage()
