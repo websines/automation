@@ -58,6 +58,5 @@ const getCode = async() => {
 
 module.exports = {
     getPhone,
-    getCode,
-    ws
+    getCode
 }
